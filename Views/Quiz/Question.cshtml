@@ -1,0 +1,56 @@
+﻿@model QuizApp.Models.QuestionViewModel
+
+@{
+    ViewData["Title"] = "Fråga " + (Model.Index + 1);
+}
+
+<h2>Fråga @(Model.Index + 1)</h2>
+
+<p>@Html.Raw(Model.Question)</p>
+
+<form asp-action="Answer" method="post">
+    <input type="hidden" name="index" value="@Model.Index" />
+    @foreach (var answer in Model.Answers)
+    {
+        <div>
+            <input class="btn-group-vertical" type="radio" name="selectedAnswer" value="@answer" id="@answer" required />
+            <label for="@answer">@Html.Raw(answer)</label>
+        </div>
+    }
+    <button type="submit">Skicka svar</button>
+</form>
+
+<style>
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    p {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+</style>

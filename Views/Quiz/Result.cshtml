@@ -1,0 +1,118 @@
+﻿@model QuizApp.Models.ResultViewModel
+
+@{
+    ViewData["Title"] = "Resultat";
+}
+
+<h2>Quiz Resultat</h2>
+<p>Ditt resultat: @Model.Score / @Model.TotalQuestions</p>
+
+@if (Model.IncorrectQuestions.Any())
+{
+    <h3 class="text-center">Frågor du svarade fel på:</h3>
+    @foreach (var question in Model.IncorrectQuestions)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <p><strong>Fråga:</strong> @Html.Raw(question.Question)</p>
+                <p class="text-success"><strong>Rätt svar:</strong> @question.CorrectAnswer</p>
+                <p class="text-danger"><strong>Felaktiga alternativ:</strong></p>
+                <ul>
+                    @foreach (var answer in question.IncorrectAnswers)
+                    {
+                        <li>@Html.Raw(answer)</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+}
+
+@if (Model.Score + Model.IncorrectQuestions.Count == Model.TotalQuestions)
+{
+    <form asp-action="Index" method="get">
+        <button type="submit">Spela igen</button>
+    </form>
+}
+
+<!-- Popup-modal -->
+<div id="successModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Bra jobbat!</h5>
+            </div>
+            <div class="modal-body">
+                <p>Du fick alla rätt! Fantastiskt jobbat! 🎉</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var score = @Model.Score;
+        var totalQuestions = @Model.TotalQuestions;
+
+        if (score === totalQuestions) {
+            var successModal = new bootstrap.Modal(document.getElementById("successModal"));
+            successModal.show();
+        }
+    });
+</script>
+
+<style>
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    p {
+        text-align: center;
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+
+    .card {
+        max-width: 600px;
+        margin: 0 auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    ul {
+        list-style-type: none;
+        text-align: center;
+        padding: 0;
+    }
+
+        ul li {
+            display: inline-block;
+            margin: 5px 10px;
+            font-size: 16px;
+        }
+
+    form {
+        display: flex;
+        margin-top: 20px;
+        justify-content: center;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+</style>

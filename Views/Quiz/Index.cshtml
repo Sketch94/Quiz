@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Quiz Start";
+}
+
+<h2 class="mb-2">Välkommen till Quiz-et!</h2>
+<form asp-action="Start" method="post">
+    <button class="rounded-2" type="submit">Starta Quiz</button>
+</form>
+
+<style>
+    h2 {
+        text-align: center;
+    }
+
+    form {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+</style>
